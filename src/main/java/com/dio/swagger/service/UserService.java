@@ -1,5 +1,6 @@
 package com.dio.swagger.service;
 
+import com.dio.swagger.handler.RequiredFields;
 import com.dio.swagger.model.User;
 import com.dio.swagger.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,13 @@ public class UserService {
     }
 
     public User save(User user){
+        if(user.getLogin() == null)
+            throw new RequiredFields("login");
+        if(user.getPassword() == null)
+            throw new RequiredFields("password");
+        if(user.getName() == null)
+            throw new RequiredFields("name");
+
         return this.repository.save(user);
     }
 
